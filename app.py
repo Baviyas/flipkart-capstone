@@ -51,5 +51,5 @@ if st.button("Draft reply") and complaint:
         f"You are a Flipkart customer support agent. The predicted satisfaction score is {best}. "
         f"Write a short, polite reply to this complaint:\n{complaint}"
     )
-    response = client.models.generate_content(model="gemini-3.8-flash", contents=prompt)
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
     st.write(response.text)
