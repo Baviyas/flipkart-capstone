@@ -1,10 +1,19 @@
-import numpy as np
 import json
+import os
+import urllib.request
 import joblib
+import numpy as np
 import pandas as pd
 import streamlit as st
 
-model = joblib.load("best_rf_model.joblib")
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1iuDt0esgOHuDaQGKrmzEeYkB6nKbbvV"
+MODEL_FILE = "best_rf_model.joblib"
+
+if not os.path.exists(MODEL_FILE):
+    with st.spinner("Downloading model (first run only)..."):
+        urllib.request.urlretrieve(MODEL_URL, MODEL_FILE)
+
+model = joblib.load(MODEL_FILE)
 columns = json.load(open("feature_columns.json"))
 
 st.title("Flipkart CSAT Predictor")
