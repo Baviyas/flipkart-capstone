@@ -5,6 +5,7 @@ import joblib
 import numpy as np
 import pandas as pd
 import streamlit as st
+from google import genai
 
 MODEL_URL = "https://huggingface.co/Baviya-AI/flipkart-csat-model/resolve/main/best_rf_model.joblib?download=true"
 MODEL_FILE = "best_rf_model.joblib"
@@ -40,3 +41,15 @@ best = labels[probs.argmax()]
 
 st.subheader(f"Predicted CSAT score: {best}")
 st.bar_chart(pd.Series(probs, index=[str(c) for c in labels]))
+st.divider()
+st.subheader("AI reply drafter")
+complaint = st.text_area("Paste the customer's complaint")
+
+if st.button("Draft reply") and complaint:
+    client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+    prompt = (
+        f"You are a Flipkart customer support agent. The predicted satisfaction score is {best}. "
+        f"Write a short, polite reply to this complaint:\n{complaint}"
+    )
+    response = client.models.generate_content(model="gemini-2.0-flash", contents=prompt)
+    st.write(response.text)
