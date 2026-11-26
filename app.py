@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-MMODEL_URL = "https://huggingface.co/Baviya-AI/flipkart-csat-model/resolve/main/best_rf_model.joblib?download=true"
+MODEL_URL = "https://huggingface.co/Baviya-AI/flipkart-csat-model/resolve/main/best_rf_model.joblib?download=true"
 MODEL_FILE = "best_rf_model.joblib"
 
 if not os.path.exists(MODEL_FILE):
